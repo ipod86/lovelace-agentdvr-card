@@ -6,6 +6,12 @@
 
 A Lovelace custom card for **Home Assistant** and **ioBroker** (Lovelace adapter) that displays [AgentDVR](https://www.ispyconnect.com/) recordings as a responsive thumbnail gallery with a built-in lightbox video player.
 
+## Screenshots
+
+| Gallery | Lightbox Player | Live + Filter |
+|:-------:|:---------------:|:-------------:|
+| ![Gallery view](images/screenshot1.jpg) | ![Lightbox player](images/screenshot2.jpg) | ![Live tile and filter](images/screenshot3.jpg) |
+
 ## Features
 
 - **Thumbnail gallery** with configurable tile size (small / medium / large)
