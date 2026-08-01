@@ -44,6 +44,13 @@
  * ----------------------------------------------------------------------------
  */
 
+const _esc = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+
 class AgentDvrCard extends HTMLElement {
   constructor() {
     super();
@@ -487,7 +494,7 @@ class AgentDvrCard extends HTMLElement {
       const items = g.items.map(({ idx, p }) => {
         const [tv, tl] = this._config.tag_position.split('-');
         const tagHtml = (this._config.show_tags && p.tag)
-          ? `<span class="tag" style="${tv}:5px;${tl}:5px">${p.tag}</span>`
+          ? `<span class="tag" style="${tv}:5px;${tl}:5px">${_esc(p.tag)}</span>`
           : '';
         return `
           <div class="thumb-item" data-idx="${idx}">
@@ -695,7 +702,7 @@ class AgentDvrCard extends HTMLElement {
     if (tags.length === 0) { wrap.innerHTML = ''; return; }
 
     const chip = (val, label) =>
-      `<button class="chip ${this._tagFilter === val ? 'active' : ''}" data-tag="${val}">${label}</button>`;
+      `<button class="chip ${this._tagFilter === val ? 'active' : ''}" data-tag="${_esc(val)}">${_esc(label)}</button>`;
     wrap.innerHTML = chip('', this._t('all')) + tags.map(t => chip(t, t)).join('');
 
     wrap.querySelectorAll('.chip').forEach(btn => {
@@ -724,10 +731,10 @@ class AgentDvrCard extends HTMLElement {
 
     video.src = p.url_vid;
     meta.innerHTML = `
-      <div class="meta-row"><span class="meta-label">${this._t('date')}</span><span>${p.date} ${p.time}</span></div>
-      <div class="meta-row"><span class="meta-label">${this._t('duration')}</span><span>${p.duration} s</span></div>
-      <div class="meta-row"><span class="meta-label">${this._t('size')}</span><span>${p.size} MB</span></div>
-      ${p.tag ? `<div class="meta-row"><span class="meta-label">${this._t('tag')}</span><span>${p.tag}</span></div>` : ''}
+      <div class="meta-row"><span class="meta-label">${this._t('date')}</span><span>${_esc(p.date)} ${_esc(p.time)}</span></div>
+      <div class="meta-row"><span class="meta-label">${this._t('duration')}</span><span>${_esc(p.duration)} s</span></div>
+      <div class="meta-row"><span class="meta-label">${this._t('size')}</span><span>${_esc(p.size)} MB</span></div>
+      ${p.tag ? `<div class="meta-row"><span class="meta-label">${this._t('tag')}</span><span>${_esc(p.tag)}</span></div>` : ''}
       <a class="download-btn" href="${p.url_vid}" download target="_blank">
         <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
         ${this._t('download')}
